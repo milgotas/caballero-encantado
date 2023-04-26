@@ -60,7 +60,7 @@ const scrollActive = () =>{
 }
 window.addEventListener('scroll', scrollActive)
 
-/*=============== DARK LIGHT THEME ===============
+/*=============== DARK LIGHT THEME ===============*/ 
 const themeButton = document.getElementById('theme-button')
 const darkTheme = 'dark-theme'
 const iconTheme = 'ri-sun-line'
@@ -89,7 +89,7 @@ themeButton.addEventListener('click', () => {
     localStorage.setItem('selected-theme', getCurrentTheme())
     localStorage.setItem('selected-icon', getCurrentIcon())
 })
-*/ 
+
 
 /*=============== SCROLL REVEAL ANIMATION ===============*/
 const sr = ScrollReveal({
@@ -102,7 +102,7 @@ const sr = ScrollReveal({
 
 sr.reveal('.home__img .newsletter__container, .footer__logo, .footer__description, .footer__content, .footer__info')
 sr.reveal('.home__data', {origin: 'bottom'})
-sr.reveal('.about__data, .game__data', {origin: 'left'})
-sr.reveal('.about__img, .game__img', {origin: 'right'})
+sr.reveal('.about__data, .recently__data', {origin: 'left'})
+sr.reveal('.about__img, .recently__img', {origin: 'right'})
 sr.reveal('.home__img', {interval: 100})
 sr.reveal('.popular__card', {interval: 100})
