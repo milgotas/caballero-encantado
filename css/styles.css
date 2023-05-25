@@ -1,5 +1,9 @@
 /*=============== GOOGLE FONTS ===============*/
-@import url("../assets/cera pro font/Cera Pro Light.otf");
+@import url("../assets/cera pro font/Cera Pro Light.ttf");
+@font-face {
+  font-family: "Cera Pro Light";
+  src: url("../assets/cera pro font/Cera Pro Light.ttf");
+}
 
 /*=============== VARIABLES CSS ===============*/
 :root {
@@ -21,9 +25,9 @@
   --container-color: 	#FDC983;*/
 
   /*========== Font and typography ==========*/
-  --body-font: "Cera", sans-serif;
-  --title-font: "Cera", serif;
-  --logo-font: 'Cera';
+  --body-font: "Cera Pro Light", sans-serif;
+  --title-font: "Cera Pro Light", serif;
+  --logo-font: 'Cera Pro Light';
   --subtitle-font: "Dancing Script", cursive;
   --biggest-font-size: 1.25rem;
   --logo-font-size: 26px;
