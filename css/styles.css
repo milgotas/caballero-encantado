@@ -521,6 +521,24 @@ height: 150%;
   transform: translateY(-1rem);
 }
 
+#links{
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+#links a{
+  margin-bottom: 10px;
+  color:#E50064;
+
+}
+
+#links a:hover{
+  color:#A98EBA;
+
+}
+
 /*=============== game ===============*/
 .game {
   position: relative;
