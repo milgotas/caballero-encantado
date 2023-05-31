@@ -44,12 +44,12 @@ var saltando = false;
 var tiempoHastaMoneda = 2;
 var tiempoMonedaMin = 0.3;
 var tiempoMonedaMax = 1.8;
-var monedaMinY = 5;
+var monedaMinY = 105;
 var monedaMaxY = 320;
 
 var tiempoHastaObstaculo = 2;
 var tiempoObstaculoMin = 0.7;
-var tiempoObstaculoMax = 1.8;
+var tiempoObstaculoMax = 1.7;
 
 var interactuables = [];
 
