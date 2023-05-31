@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="esp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--=============== METAS ===============-->
+    <title>La historia del caballero encantado - Mil Gotas</title>
+    <meta
+      name="description"
+      content="Web que acompaña al libro: La historia del caballero encantado, editado por Mil Gotas, en el año 2023"
+    />
+    <meta name="keywords" content="Quijote, China, libro" />
+    <meta name="author" content="R. Indira Valentina Réquiz - Rainvare" />
+    <meta name="copyright" content="©2023 - Rainvare" />
+
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="./img/logo-milgotas-rojo.png" type="image/x-icon" />
+
+    <!--=============== REMIXICONS ===============-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/game.css" />
+    <title>La historia del caballero encantado</title>
+  </head>
+  <body>
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+      <nav class="nav container">
+        <a href="#" class="nav__logo">
+          <img src="./img/logo-milgotas-rojo.png" alt="logo" />
+          La historia del caballero encantado
+        </a>
+
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="./index.html" class="nav__link active-link">Inicio</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="./index.html/#about" class="nav__link">Sobre el libro</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="./index.html/#popular" class="nav__link">Reseñas</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="#game" class="nav__link">Juego</a>
+            </li>
+          </ul>
+
+          <!-- Close button 
+          <div class="nav__close" id="nav-close">
+            <i class="ri-close-line"></i>
+          </div>
+-->
+          <img src="./img/patterns.png" alt="patterns" class="nav__img1" />
+          <img src="./img/patterns.png" alt="patterns" class="nav__img2" />
+        </div>
+<!--
+        <div class="nav__buttons">
+         Dark-Light Mode  
+          <i class="ri-moon-line change-theme" id="theme-button"></i>
+
+           Toggle Button  
+          <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-apps-2-line"></i>
+          </div> 
+        </div> -->
+      </nav>
+    </header>
+   <body >
+    <!--==================== MAIN ====================-->
+    <main class="main">
+        <!--==================== GAME ====================-->
+   
+         <section class="game section" id="game">
+       
+            <div class="contenedor">
+
+                <div class="suelo"></div>
+                
+                <div class="caballero caballero-corriendo"></div>
+        
+                <div class="score">0</div>
+        
+            </div>
+        
+            <div class="game-over">GAME OVER</div>
+            
+        
+            <audio src="./assets/sound/moneda.mp3" class="audio-moneda"></audio>
+            <audio src="./assets/sound/salto.mp3" class="audio-salto"></audio>
+            <audio src=".7assets/sound/gameOver.mp3" class="audio-gameOver"></audio>
+      </section>
+
+
+    </main>
+
+
+    <!--=============== SCROLLREVEAL ===============-->
+    <script src="./js/scrollreveal.min.js"></script>
+
+    <!--=============== MAIN JS ===============-->
+    <script src="./js/main.js"></script>
+    <script src="./js/game.js"></script>
+  </body>
+</html>

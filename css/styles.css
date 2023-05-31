@@ -647,6 +647,7 @@ height: 150%;
 
 /*=============== FOOTER ===============*/
 .footer {
+  background-color: #E50064;
   position: relative;
   padding-block: 3rem 2rem;
   overflow: hidden;
@@ -660,7 +661,7 @@ height: 150%;
   display: inline-flex;
   align-items: center;
   column-gap: .5rem;
-  color: var(--title-color);
+  color: var(--text-color);
   font-family: var(--logo-font);
   font-size: 35px;
   font-weight: var(--font-semi-bold);
@@ -707,7 +708,7 @@ height: 150%;
 }
 
 .footer__link:hover {
-  color: var(--first-color);
+  color: var(--body-color);
 }
 
 .footer__social {
@@ -722,7 +723,7 @@ height: 150%;
 }
 
 .footer__social-link:hover {
-  color: var(--first-color-alt);
+  color: var(--body-color);
   transform: translateY(-2px);
 }
 

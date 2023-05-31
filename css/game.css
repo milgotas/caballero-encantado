@@ -1,24 +1,23 @@
-
+@import url("./styles.css");
 * {
     padding: 0;
     margin: 0;
 }
 
-#game_body{
+main{
     height: 100vh;
-    background: #171412;
-    display: flex;
-    align-items: center;
+    background-color: var(--body-color);
+    
 }
 
-.contenedor {
-    width: 920px;
-    height: 280px;
+.contenedor {display: flex;
+    align-items: center;
+    width: 860px;
+    height: 360px;
     margin: 0 auto;
     
     position: relative;
-
-    background: linear-gradient(#b7d6c7, transparent) #ffe2d1;/*linear-gradient(#90ebff, white);*/
+    background: linear-gradient(#b7d6c7 0%, transparent 60%, transparent 80%,  #6d757e 100%) #ffe2d1;/*linear-gradient(#90ebff, white);*/
     transition: background-color 1s linear;
     overflow: hidden;
 }
@@ -37,10 +36,10 @@
 
 .caballero {
     width: 84px;
-    height: 84px;
+    height: 85px;
 
     position: absolute;
-    bottom: 22px;
+    bottom: 54px;
     left: 42px;
     z-index: 2;
 
@@ -58,8 +57,8 @@
 }
 
 .suelo {
-    width: 200%;
-    height: 42px;
+    width: 500%;
+    height: 70px;
 
     position: absolute;
     bottom: 0;
@@ -67,36 +66,54 @@
 
     background: url(../img/suelo.png) repeat-x 0px 0px;
     background-size: 50% 42px;
+  
 
 }
 
-.chineseplace{
-    width: 46px;
-    height: 96px;
+
+.obstaculo{
+    width: 100%;
+    height: 100%;
 
     position: absolute;
-    bottom: 16px;
     left: 600px;
     z-index: 1;
 
-    background: url(../img/pagoda.png) no-repeat;
-}
-.chineseplace2{
-    width: 98px;
-    height: 66px;
-
-    background: url(../img/chineseplace2.png) no-repeat;
 }
 
-.pastel{
+.obstaculo-flotante{
+    bottom: 45px;
+    width: 60px;
+    height:60px;
+    background: url(../img/sprite1.png)  no-repeat;
+    animation: abanear 1s ease-in-out infinite;
+}
+
+.obstaculo-hundido{
+    bottom: 45px;
+    width: 60px;
+    height: 60px;
+    background: url(../img/sprite2.png)  no-repeat;
+}
+
+.nube{
     width: 92px;
     height: 26px;
 
     position: absolute;
     z-index: 0;
 
-    background: url(../img/pastel.png) no-repeat;
+    background: url(../img/nube.png) no-repeat;
     background-size: 92px 26px;
+}
+
+.moneda{
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    z-index: 1;
+    
+    background: url(../img/dumplings.png) no-repeat center center;
 }
 
 .score{
@@ -118,8 +135,9 @@
 .game-over{
     display: none;
 
-    position: absolute;
     width: 100%;
+    position: absolute;
+    z-index: 10;
 
 
     text-align: center;
@@ -128,12 +146,26 @@
     font-family: Verdana;
     font-weight: 700;
 }
+/*
 
 @keyframes animarcaballero{
     from{
         background-position-x: -84px;
     }
     to{
-        background-position-x: -252px;
+        background-position-x: 252px;
     }
 }
+
+
+
+@keyframes oleaje{
+    0%,100%{
+        bottom: 0px;
+    }
+    50%{
+        bottom: -10px;
+    }
+
+   
+} */

@@ -1,5 +1,6 @@
+
 //****** GAME LOOP ********//
-    
+
 var time = new Date();
 var deltaTime = 0;
 
@@ -24,7 +25,7 @@ function Loop() {
 
 //****** GAME LOGIC ********//
 
-var sueloY = 22;
+var sueloY = 42;
 var velY = 0;
 var impulso = 900;
 var gravedad = 2500;
@@ -33,32 +34,41 @@ var caballeroPosX = 42;
 var caballeroPosY = sueloY; 
 
 var sueloX = 0;
-var velEscenario = 1280/3;
+var velEscenario = 1280/4;
 var gameVel = 1;
 var score = 0;
 
 var parado = false;
 var saltando = false;
 
+var tiempoHastaMoneda = 2;
+var tiempoMonedaMin = 0.3;
+var tiempoMonedaMax = 1.8;
+var monedaMinY = 5;
+var monedaMaxY = 320;
+
 var tiempoHastaObstaculo = 2;
 var tiempoObstaculoMin = 0.7;
 var tiempoObstaculoMax = 1.8;
-var obstaculoPosY = 16;
-var obstaculos = [];
 
-var tiempoHastapastel = 0.5;
-var tiempopastelMin = 0.7;
-var tiempopastelMax = 2.7;
-var maxpastelY = 270;
-var minpastelY = 100;
-var pastels = [];
-var velpastel = 0.5;
+var interactuables = [];
+
+var tiempoHastaNube = 0.5;
+var tiempoNubeMin = 0.7;
+var tiempoNubeMax = 2.7;
+var maxNubeY = 270;
+var minNubeY = 100;
+var nubes = [];
+var velNube = 0.5;
 
 var contenedor;
 var caballero;
 var textoScore;
 var suelo;
 var gameOver;
+var audioMoneda;
+var audioSalto;
+var audioGameOver;
 
 function Start() {
     gameOver = document.querySelector(".game-over");
@@ -66,6 +76,9 @@ function Start() {
     contenedor = document.querySelector(".contenedor");
     textoScore = document.querySelector(".score");
     caballero = document.querySelector(".caballero");
+    audioMoneda = document.querySelector(".audio-moneda");
+    audioSalto = document.querySelector(".audio-salto");
+    audioGameOver = document.querySelector(".audio-gameOver");
     document.addEventListener("keydown", HandleKeyDown);
 }
 
@@ -74,10 +87,11 @@ function Update() {
     
     Movercaballerosaurio();
     MoverSuelo();
+    DecidirCrearMonedas();
     DecidirCrearObstaculos();
-    DecidirCrearpastels();
+    DecidirCrearNubes();
     MoverObstaculos();
-    Moverpastels();
+    MoverNubes();
     DetectarColision();
 
     velY -= gravedad * deltaTime;
@@ -90,19 +104,25 @@ function HandleKeyDown(ev){
 }
 
 function Saltar(){
-    if(caballeroPosY === sueloY){
+    if(!saltando){
         saltando = true;
-        velY = impulso;
-        caballero.classList.remove("caballero-corriendo");
+       caballero.classList.remove("caballero-corriendo");
+       audioSalto.currentTime = 0;
+        audioSalto.play();
+      if(caballeroPosY === sueloY){ 
+          velY = impulso;
+        
     }
+}
 }
 
 function Movercaballerosaurio() {
-    caballeroPosY += velY * deltaTime;
+    
     if(caballeroPosY < sueloY){
         
         TocarSuelo();
     }
+    caballeroPosY += velY * deltaTime;
     caballero.style.bottom = caballeroPosY+"px";
 }
 
@@ -137,58 +157,86 @@ function DecidirCrearObstaculos() {
     }
 }
 
-function DecidirCrearpastels() {
-    tiempoHastapastel -= deltaTime;
-    if(tiempoHastapastel <= 0) {
-        Crearpastel();
+function DecidirCrearMonedas() {
+    tiempoHastaMoneda -= deltaTime;
+    if(tiempoHastaMoneda <= 0) {
+        CrearMoneda();
     }
 }
+
+function DecidirCrearNubes() {
+    tiempoHastaNube -= deltaTime;
+    if(tiempoHastaNube <= 0) {
+        CrearNube();
+    }
+}
+
+function CrearMoneda() {
+    var moneda = document.createElement("div");
+    contenedor.appendChild(moneda);
+    moneda.classList.add("moneda");
+    moneda.posX = contenedor.clientWidth;
+    moneda.style.left = contenedor.clientWidth+"px";
+    moneda.style.bottom = monedaMinY + (monedaMaxY - monedaMinY) * Math.random() + "px";
+
+    interactuables.push(moneda);
+    tiempoHastaMoneda = tiempoMonedaMin + Math.random() * (tiempoMonedaMax-tiempoMonedaMin) / gameVel;
+}
+
+
+
 
 function CrearObstaculo() {
     var obstaculo = document.createElement("div");
     contenedor.appendChild(obstaculo);
-    obstaculo.classList.add("chineseplace");
-    if(Math.random() > 0.5) obstaculo.classList.add("chineseplace2");
+    obstaculo.classList.add("obstaculo");
+    if(Math.random() > 0.5) obstaculo.classList.add("obstaculo");
     obstaculo.posX = contenedor.clientWidth;
     obstaculo.style.left = contenedor.clientWidth+"px";
 
-    obstaculos.push(obstaculo);
+    if(Math.random() > 0.5){
+        obstaculo.classList.add("obstaculo-flotante");
+    }else{
+        obstaculo.classList.add("obstaculo-hundido");
+    }
+
+    interactuables.push(obstaculo);
     tiempoHastaObstaculo = tiempoObstaculoMin + Math.random() * (tiempoObstaculoMax-tiempoObstaculoMin) / gameVel;
 }
 
-function Crearpastel() {
-    var pastel = document.createElement("div");
-    contenedor.appendChild(pastel);
-    pastel.classList.add("pastel");
-    pastel.posX = contenedor.clientWidth;
-    pastel.style.left = contenedor.clientWidth+"px";
-    pastel.style.bottom = minpastelY + Math.random() * (maxpastelY-minpastelY)+"px";
+function CrearNube() {
+    var nube = document.createElement("div");
+    contenedor.appendChild(nube);
+    nube.classList.add("nube");
+    nube.posX = contenedor.clientWidth;
+    nube.style.left = contenedor.clientWidth+"px";
+    nube.style.bottom = minNubeY + Math.random() * (maxNubeY-minNubeY)+"px";
     
-    pastels.push(pastel);
-    tiempoHastapastel = tiempopastelMin + Math.random() * (tiempopastelMax-tiempopastelMin) / gameVel;
+    nubes.push(nube);
+    tiempoHastaNube = tiempoNubeMin + Math.random() * (tiempoNubeMax-tiempoNubeMin) / gameVel;
 }
 
 function MoverObstaculos() {
-    for (var i = obstaculos.length - 1; i >= 0; i--) {
-        if(obstaculos[i].posX < -obstaculos[i].clientWidth) {
-            obstaculos[i].parentNode.removeChild(obstaculos[i]);
-            obstaculos.splice(i, 1);
+    for (var i = interactuables.length - 1; i >= 0; i--) {
+        if(interactuables[i].posX < -interactuables[i].clientWidth) {
+            interactuables[i].parentNode.removeChild(interactuables[i]);
+            interactuables.splice(i, 1);
             GanarPuntos();
         }else{
-            obstaculos[i].posX -= CalcularDesplazamiento();
-            obstaculos[i].style.left = obstaculos[i].posX+"px";
+            interactuables[i].posX -= CalcularDesplazamiento();
+            interactuables[i].style.left = interactuables[i].posX+"px";
         }
     }
 }
 
-function Moverpastels() {
-    for (var i = pastels.length - 1; i >= 0; i--) {
-        if(pastels[i].posX < -pastels[i].clientWidth) {
-            pastels[i].parentNode.removeChild(pastels[i]);
-            pastels.splice(i, 1);
+function MoverNubes() {
+    for (var i = nubes.length - 1; i >= 0; i--) {
+        if(nubes[i].posX < -nubes[i].clientWidth) {
+            nubes[i].parentNode.removeChild(nubes[i]);
+            nubes.splice(i, 1);
         }else{
-            pastels[i].posX -= CalcularDesplazamiento() * velpastel;
-            pastels[i].style.left = pastels[i].posX+"px";
+            nubes[i].posX -= CalcularDesplazamiento() * velNube;
+            nubes[i].style.left = nubes[i].posX+"px";
         }
     }
 }
@@ -196,14 +244,16 @@ function Moverpastels() {
 function GanarPuntos() {
     score++;
     textoScore.innerText = score;
-    if(score == 5){
-        gameVel = 1.5;
+    audioMoneda.currentTime = 0;
+    audioMoneda.play();
+    if(score == 10){
+        gameVel = 1.2;
         contenedor.classList.add("mediodia");
-    }else if(score == 10) {
-        gameVel = 2;
+    }else if(score == 25) {
+        gameVel = 1.4;
         contenedor.classList.add("tarde");
-    } else if(score == 20) {
-        gameVel = 3;
+    } else if(score == 50) {
+        gameVel = 1.7;
         contenedor.classList.add("noche");
     }
     suelo.style.animationDuration = (3/gameVel)+"s";
@@ -212,20 +262,26 @@ function GanarPuntos() {
 function GameOver() {
     Estrellarse();
     gameOver.style.display = "block";
+    audioGameOver.play();
 }
 
 function DetectarColision() {
-    for (var i = 0; i < obstaculos.length; i++) {
-        if(obstaculos[i].posX > caballeroPosX + caballero.clientWidth) {
+    for (var i = 0; i < interactuables.length; i++) {
+        if(interactuables[i].posX > caballeroPosX + caballero.clientWidth) {
             //EVADE
             break; //al estar en orden, no puede chocar con más
-        }else{
-            if(IsCollision(caballero, obstaculos[i], 10, 30, 15, 20)) {
+        }if(IsCollision(caballero, interactuables[i], 10, 25, 10, 20)) {
+            if(interactuables[i].classList.contains("moneda")){
+                GanarPuntos();
+                interactuables[i].parentNode.removeChild(interactuables[i]);
+                interactuables.splice(i, 1);
+            }else{
                 GameOver();
             }
         }
     }
 }
+
 
 function IsCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft) {
     var aRect = a.getBoundingClientRect();
@@ -238,4 +294,3 @@ function IsCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft)
         (aRect.left + paddingLeft > (bRect.left + bRect.width))
     );
 }
-
